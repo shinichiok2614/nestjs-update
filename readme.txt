@@ -75,3 +75,21 @@ yarn add -D @types/passport-jwt
 yarn add -D pactum
 
 yarn test:e2e
+"test:e2e": "jest --config --watch -no-cache ./test/jest-e2e.json"
+
+yarn add dotenv dotenv-cli
+
+"prisma:test:deploy": "dotenv -e .env.test -- prisma migrate deploy",
+"db:test:remove": "docker compose down test-database --volumes",
+"db:test:create": "docker compose up test-database --detach",
+"db:test:restart": "yarn db:test:remove && yarn db:test:create && sleep 2 && yarn prisma:test:deploy",
+"pretest:e2e": "yarn db:test:restart",
+
+//mặc định pretest sẽ chạy trước test:e2e
+
+yarn test:e2e
+
+npx dotenv -e .env.test -- prisma studio
+npx dotenv -e .env -- prisma studio
+
+2:19:36

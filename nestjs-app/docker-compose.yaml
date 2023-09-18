@@ -11,6 +11,17 @@ services:
       POSTGRES_DB: testdb
     networks:
       - nestjs-networks
+  test-database:
+    image: postgres:15.0
+    container_name: test-database
+    ports:
+      - 5435:5432 #pc:container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Abc123456789
+      POSTGRES_DB: testdb
+    networks:
+      - nestjs-networks
 networks:
   nestjs-networks:
   # -d: deamon

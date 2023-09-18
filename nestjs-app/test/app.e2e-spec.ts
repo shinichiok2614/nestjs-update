@@ -22,7 +22,51 @@
 //       .expect('Hello World!');
 //   });
 // });
+import { Test } from '@nestjs/testing';
+import { AppModule } from '../src/app.module';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { PrismaService } from '../src/prisma/prisma.service';
+import * as pactum from 'pactum';
 
+const PORT = 3003;
 describe('App EndToEnd tests', () => {
-  it.todo('should PASS,hahha');
+  let app: INestApplication;
+  let prismaService: PrismaService;
+  beforeAll(async () => {
+    const appModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+    app = appModule.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe());
+    await app.init();
+    await app.listen(PORT);
+    prismaService = app.get(PrismaService);
+    await prismaService.cleanDatabase();
+    pactum.request.setBaseUrl('');
+  });
+  afterAll(() => {
+    app.close();
+  });
+  it.todo('should PASS,keke 1');
+  it.todo('should PASS,keke 2');
+  describe('Test Authentication', () => {
+    describe('Register', () => {
+      it('should Register', () => {
+        return pactum
+          .spec()
+          .post(`http://localhost:${PORT}/auth/register`)
+          .withBody({
+            email: 'testemail01@gmail.com',
+            password: 'a123456',
+          })
+          .expectStatus(201)
+          .inspect();
+      });
+    });
+    describe('Login', () => {
+      it('should Login', () => {
+        return;
+      });
+    });
+  });
 });
