@@ -8,6 +8,7 @@ nest g module note
 nest g module prisma
 nest g service prisma --no-spec
 nest g controller user --no-spec
+nest g controller note --no-spec
 
 //giong nodemon ***
 yarn start:dev
@@ -92,4 +93,4 @@ yarn test:e2e
 npx dotenv -e .env.test -- prisma studio
 npx dotenv -e .env -- prisma studio
 
-2:19:36
+-18:05
