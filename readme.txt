@@ -1,3 +1,4 @@
+npm i -g nestjs/cli
 nest new nestjs-app
 cd nestjs-app
 yarn run start
